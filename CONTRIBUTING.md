@@ -18,14 +18,14 @@
 
   ```python
   def hello(phrase):
-      return hello
+      return phrase
   ```
 
   A correct version of above function would be:
 
   ```python
   def hello(phrase: str) -> str:
-      return hello
+      return phrase
   ```
 
   Run mypy before opening a PR to make sure no type errors fails the CI.
