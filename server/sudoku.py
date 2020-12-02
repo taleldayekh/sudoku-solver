@@ -5,6 +5,7 @@ NROWS = 9
 NCOLS = 9
 
 
+
 def writeSudokuToFile(board: List[int], filename: str) -> None:
     with open(filename, "w") as outfile:
         json.dump(board, outfile)
@@ -39,10 +40,23 @@ def printSudoku(board: List[int]) -> None:
         print("|")
     print(divider)
 
+# 0-8 is row 0 , 9-17 row 1 etc.
+def getRowNumber(index: int) -> int:
+    return index//NROWS
 
+# [0,9,18,27,36,45,54,63,72] is column 0 etc.
+def getColumnNumber(index: int) -> int:
+    return index%NCOLS
 
-S = readSudokuFromFile("example_sudoku.json")
-printSudoku(S)
+# rows 0-2 and column 0-2 is box 1, rows 0-2 and column 3-5 is box 2 etc.
+def getBoxNumber(index: int) -> int:
+    return 3*(getRowNumber(index)//3) + getColumnNumber(index)//3
 
-S_solved = readSudokuFromFile("example_sudoku_solved.json")
-printSudoku(S_solved)
+index_board = [i for i in range(81)]
+printSudoku(index_board)
+
+for i in index_board:
+    r = getRowNumber(i)
+    c = getColumnNumber(i)
+    b = getBoxNumber(i)
+    print(f"{i}: {r}; {c}; {b}")
