@@ -13,7 +13,7 @@ def test_validate_list_entries() -> None:
     assert not validate_list_enries(test_list)
     test_list[0] = 10
     assert not validate_list_enries(test_list)
-    test_list[0] = "a"
+    test_list[0] = "a"  # type: ignore
     assert not validate_list_enries(test_list)
     assert not validate_list_enries([1, 2])
 
