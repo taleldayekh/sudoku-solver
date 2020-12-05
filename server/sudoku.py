@@ -96,7 +96,7 @@ def validate_box(board: List[int], box_index: int) -> bool:
     return validate_region(box)
 
 
-def validate_list_enries(board: List[int]) -> bool:
+def validate_list_entries(board: List[int]) -> bool:
     # Check size
     if len(board) != NROWS * NCOLS:
         return False
