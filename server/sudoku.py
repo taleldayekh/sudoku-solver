@@ -112,7 +112,7 @@ def validate_list_entries(board: List[int]) -> bool:
 
 
 def validate_sudoku(board: List[int]) -> bool:
-    if not validate_list_enries(board):
+    if not validate_list_entries(board):
         return False
     # validate all regions
     for i in range(NROWS):
