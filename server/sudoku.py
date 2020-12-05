@@ -127,13 +127,13 @@ def validate_sudoku(board: List[int]) -> bool:
 
 if __name__ == "__main__":
     sudoku = read_from_file("example_sudoku.json")
-    print_sudoku(S)
-    print(validate_sudoku(S))
-    S[0] = 1
-    S[1] = 1
-    print_sudoku(S)
-    print(validate_sudoku(S))
+    print_sudoku(sudoku)
+    print(validate_sudoku(sudoku))
+    sudoku[0] = 1
+    sudoku[1] = 1
+    print_sudoku(sudoku)
+    print(validate_sudoku(sudoku))
 
-    S_solved = read_from_file("example_sudoku_solved.json")
-    print_sudoku(S_solved)
-    print(validate_sudoku(S_solved))
+    sudoku_solved = read_from_file("example_sudoku_solved.json")
+    print_sudoku(sudoku_solved)
+    print(validate_sudoku(sudoku_solved))
