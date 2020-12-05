@@ -56,18 +56,18 @@ def get_box_number(index: int) -> int:
 
 
 def get_row(board: List[int], row: int) -> List[int]:
-    return [board[row * NROWS + i] for i in range(NCOLS)]
+    return [board[row * NROWS + col] for col in range(NCOLS)]
 
 
 def get_column(board: List[int], column: int) -> List[int]:
-    return [board[column + NROWS * i] for i in range(NROWS)]
+    return [board[column + NROWS * row] for row in range(NROWS)]
 
 
 def get_box(board: List[int], box: int) -> List[int]:
     boxlist = []
-    for i in range(NROWS * NCOLS):
-        if get_box_number(i) == box:
-            boxlist.append(board[i])
+    for index in range(NROWS * NCOLS):
+        if get_box_number(index) == box:
+            boxlist.append(board[index])
     return boxlist
 
 
@@ -115,12 +115,12 @@ def validate_sudoku(board: List[int]) -> bool:
     if not validate_list_entries(board):
         return False
     # validate all regions
-    for row in range(NROWS):
-        if not validate_row(board, i):
+    for index in range(NROWS):
+        if not validate_row(board, index):
             return False
-        if not validate_column(board, i):
+        if not validate_column(board, index):
             return False
-        if not validate_box(board, i):
+        if not validate_box(board, index):
             return False
     return True
 
