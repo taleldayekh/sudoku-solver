@@ -14,12 +14,12 @@ def test_can_validate_list_entries() -> None:
 def test_cannot_validate_list_entries() -> None:
     test_list = [0 for i in range(81)]
     test_list[0] = -1
-    assert not validate_list_enries(test_list)
+    assert not validate_list_entries(test_list)
     test_list[0] = 10
-    assert not validate_list_enries(test_list)
+    assert not validate_list_entries(test_list)
     test_list[0] = "a"  # type: ignore
-    assert not validate_list_enries(test_list)
-    assert not validate_list_enries([1, 2])
+    assert not validate_list_entries(test_list)
+    assert not validate_list_entries([1, 2])
 
 
 def test_can_validate_region() -> None:
