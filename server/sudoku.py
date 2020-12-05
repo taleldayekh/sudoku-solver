@@ -115,7 +115,7 @@ def validate_sudoku(board: List[int]) -> bool:
     if not validate_list_entries(board):
         return False
     # validate all regions
-    for i in range(NROWS):
+    for row in range(NROWS):
         if not validate_row(board, i):
             return False
         if not validate_column(board, i):
