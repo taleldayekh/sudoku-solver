@@ -6,9 +6,13 @@ from server.sudoku import (
 )
 
 
-def test_validate_list_entries() -> None:
+def test_can_validate_list_entries() -> None:
     test_list = [0 for i in range(81)]
-    assert validate_list_enries(test_list)
+    assert validate_list_entries(test_list)
+    
+
+def test_cannot_validate_list_entries() -> None:
+    test_list = [0 for i in range(81)]
     test_list[0] = -1
     assert not validate_list_enries(test_list)
     test_list[0] = 10
@@ -18,16 +22,23 @@ def test_validate_list_entries() -> None:
     assert not validate_list_enries([1, 2])
 
 
-def test_validate_region() -> None:
+def test_can_validate_region() -> None:
     region = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     assert validate_region(region)
-    region[0] = 9
+
+    
+def test_cannot_validate_region() -> None:
+    region = [9, 9, 3, 4, 5, 6, 7, 8, 1]
     assert not validate_region(region)
 
-
-def test_validate_sudoku() -> None:
+    
+def test_can_validate_sudoku() -> None:
     sudoku = read_from_file("server/example_sudoku.json")
     assert validate_sudoku(sudoku)
+
+
+def test_cannot_validate_sudoku() -> None:
+    sudoku = read_from_file("server/example_sudoku.json")
     # incorrect row:
     sudoku[0] = 8
     sudoku[8] = 8
