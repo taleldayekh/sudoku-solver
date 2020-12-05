@@ -126,7 +126,7 @@ def validate_sudoku(board: List[int]) -> bool:
 
 
 if __name__ == "__main__":
-    S = read_from_file("example_sudoku.json")
+    sudoku = read_from_file("example_sudoku.json")
     print_sudoku(S)
     print(validate_sudoku(S))
     S[0] = 1
