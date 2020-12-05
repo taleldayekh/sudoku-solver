@@ -1,6 +1,6 @@
 from server.sudoku import (
     read_from_file,
-    validate_list_enries,
+    validate_list_entries,
     validate_region,
     validate_sudoku,
 )
@@ -9,7 +9,7 @@ from server.sudoku import (
 def test_can_validate_list_entries() -> None:
     test_list = [0 for i in range(81)]
     assert validate_list_entries(test_list)
-    
+
 
 def test_cannot_validate_list_entries() -> None:
     test_list = [0 for i in range(81)]
@@ -26,12 +26,12 @@ def test_can_validate_region() -> None:
     region = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     assert validate_region(region)
 
-    
+
 def test_cannot_validate_region() -> None:
     region = [9, 9, 3, 4, 5, 6, 7, 8, 1]
     assert not validate_region(region)
 
-    
+
 def test_can_validate_sudoku() -> None:
     sudoku = read_from_file("server/example_sudoku.json")
     assert validate_sudoku(sudoku)
