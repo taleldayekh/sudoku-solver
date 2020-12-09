@@ -1,1 +1,8 @@
+# testing
 .coverage
+
+# python
+__pycache__/
+
+# ide
+.vscode
