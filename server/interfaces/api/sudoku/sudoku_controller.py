@@ -9,7 +9,6 @@ sudoku_v1 = Blueprint("sudoku_v1", __name__)
 def validate() -> Response:
     data = request.get_json()
 
-    if post_validate(data) == True:
+    if post_validate(data):
         return Response(status=200)
-    else:
-        return Response(status=400)
+    return Response(status=400)
