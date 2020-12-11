@@ -1,44 +1,7 @@
-import json
 from typing import List
 
 NROWS = 9
 NCOLS = 9
-
-
-def write_to_file(board: List[int], filename: str) -> None:
-    with open(filename, "w") as outfile:
-        json.dump(board, outfile)
-
-
-def read_from_file(filename: str) -> List[int]:
-    with open(filename, "r") as infile:
-        return json.load(infile)
-
-
-def print_sudoku_simple(board: List[int]) -> None:
-    for row in range(NROWS):
-        for col in range(NCOLS):
-            num = board[row * NROWS + col]
-            print(num, end=" ")
-        print(" ")
-
-
-def print_sudoku(board: List[int]) -> None:
-    divider = "|———————|———————|———————|"
-    for row in range(NROWS):
-        if row % 3 == 0:
-            print(divider)
-        for col in range(NCOLS):
-            if col % 3 == 0:
-                print("| ", end="")
-            num = board[row * NROWS + col]
-            if num > 0:
-                print(num, end=" ")
-            else:
-                print(" ", end=" ")
-        print("|")
-    print(divider)
-
 
 # 0-8 is row 0 , 9-17 row 1 etc.
 def get_row_number(index: int) -> int:
@@ -123,17 +86,3 @@ def validate_sudoku(board: List[int]) -> bool:
         if not validate_box(board, index):
             return False
     return True
-
-
-if __name__ == "__main__":
-    sudoku = read_from_file("example_sudoku.json")
-    print_sudoku(sudoku)
-    print(validate_sudoku(sudoku))
-    sudoku[0] = 1
-    sudoku[1] = 1
-    print_sudoku(sudoku)
-    print(validate_sudoku(sudoku))
-
-    sudoku_solved = read_from_file("example_sudoku_solved.json")
-    print_sudoku(sudoku_solved)
-    print(validate_sudoku(sudoku_solved))

@@ -1,9 +1,9 @@
-from server.sudoku import (
-    read_from_file,
+from server.app_sudoku.domain.model import (
     validate_list_entries,
     validate_region,
     validate_sudoku,
 )
+from server.tests.utils.mock_data import VALID_SUDOKU
 
 
 def test_can_validate_list_entries() -> None:
@@ -33,12 +33,12 @@ def test_cannot_validate_region() -> None:
 
 
 def test_can_validate_sudoku() -> None:
-    sudoku = read_from_file("server/example_sudoku.json")
+    sudoku = VALID_SUDOKU
     assert validate_sudoku(sudoku)
 
 
 def test_cannot_validate_sudoku() -> None:
-    sudoku = read_from_file("server/example_sudoku.json")
+    sudoku = VALID_SUDOKU
     # incorrect row:
     sudoku[0] = 8
     sudoku[8] = 8
