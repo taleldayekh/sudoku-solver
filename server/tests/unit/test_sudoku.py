@@ -89,7 +89,7 @@ def test_can_solve_simple_sudoku() -> None:
     assert solved_sudoku == VALID_SUDOKU_SOLVED
 
 
-def test_cannot_solve_incorrect_sudoku() -> None:
+def test_incorrect_sudoku_returns_empty_list() -> None:
     sudoku = VALID_SUDOKU
     sudoku[0] = 1
     sudoku[1] = 1
