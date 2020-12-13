@@ -1,7 +1,7 @@
 SRC_DIR = server/
 
-serve-api:
-	flask run
+server-api:
+	pipenv run python -m flask run
 
 fix:
 	pipenv run isort $(SRC_DIR)
