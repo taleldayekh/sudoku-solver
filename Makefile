@@ -1,5 +1,8 @@
 SRC_DIR = server/
 
+serve-api:
+	flask run
+
 fix:
 	pipenv run isort $(SRC_DIR)
 	pipenv run black $(SRC_DIR)
