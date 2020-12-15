@@ -1,4 +1,5 @@
-from server.app_sudoku.domain.sudoku import (
+from server.app_sudoku.domain.sudoku import Sudoku
+from server.app_sudoku.domain.sudoku_utils import (
     NCOLS,
     NROWS,
     PEERS,
@@ -90,7 +91,7 @@ def test_can_solve_simple_sudoku() -> None:
 
 
 def test_incorrect_sudoku_returns_empty_list() -> None:
-    sudoku = VALID_SUDOKU
+    sudoku = VALID_SUDOKU.copy()
     sudoku[0] = 1
     sudoku[1] = 1
     solved_sudoku = solve_sudoku(sudoku)
@@ -104,3 +105,32 @@ def test_can_solve_hard_sudoku() -> None:
 
 def test_sudoku_to_list() -> None:
     assert sudoku_to_list({0: "3", 1: "2"}) == [3, 2]
+
+
+def test_sudoku_object_incorrect_input() -> None:
+    sudoku = [1, 2, 3]
+    S = Sudoku(sudoku)
+    assert S.input == sudoku
+    assert not S.input_is_valid
+    assert not S.solved_sudoku
+    assert not S.sudoku_is_solvable
+
+
+def test_sudoku_object_unsolvable_input() -> None:
+    sudoku = VALID_SUDOKU_HARD.copy()
+    sudoku[79] = 9
+    sudoku[80] = 9
+    S = Sudoku(sudoku)
+    assert S.input == sudoku
+    assert S.input_is_valid
+    assert not S.solved_sudoku
+    assert not S.sudoku_is_solvable
+
+
+def test_sudoku_object_correct_input() -> None:
+    sudoku = VALID_SUDOKU_HARD
+    S = Sudoku(sudoku)
+    assert S.input == sudoku
+    assert S.input_is_valid
+    assert S.solved_sudoku == VALID_SUDOKU_HARD_SOLVED
+    assert S.sudoku_is_solvable
