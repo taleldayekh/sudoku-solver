@@ -13,7 +13,7 @@
 
 ---
 
-### `POST` Solve
+### `POST` solve
 
 #### Request
 
@@ -24,18 +24,22 @@ http://localhost:5000/api/v1/sudoku/solve \
 -d '{"sudoku": [<sudoku array>]}' 
 ```
 
-#### Success Response
+#### Success Responses
 
-```shell
-{"solved-sudoku": [<sudoku array>]}
+```json
+{"data": [<sudoku array>]}
 ```
 
-```shell
-{"not-solvable-sudoku": "Sudoku cannot be solved"}
+```json
+{"data": "Sudoku is unsolvable"}
 ```
 
-### Error Response
+#### Error Responses
 
-```shell
-{"invalid-sudoku": "Not a valid Sudoku"}
+```json
+{"error": "Not a valid Sudoku"}
+```
+
+```json
+{"error": "Invalid JSON key"}
 ```

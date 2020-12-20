@@ -8,13 +8,13 @@ class Sudoku:
         self.input = input_sudoku
 
     @property
-    def input_is_valid(self) -> bool:
+    def is_valid(self) -> bool:
         return bool(validate_sudoku_input(self.input))
 
     @property
-    def sudoku_is_solvable(self) -> bool:
-        return bool(self.solved_sudoku)
+    def is_solvable(self) -> bool:
+        return bool(self.solved)
 
     @property
-    def solved_sudoku(self) -> List[int]:
-        return solve_sudoku(self.input) if self.input_is_valid else []
+    def solved(self) -> List[int]:
+        return solve_sudoku(self.input) if self.is_valid else []
