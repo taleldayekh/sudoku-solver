@@ -21,13 +21,13 @@
 curl -X POST \
 http://localhost:5000/api/v1/sudoku/solve \
 -H "Content-Type: application/json" \
--d '{"sudoku": "<sudoku array>"}' 
+-d '{"sudoku": [<sudoku array>]}' 
 ```
 
 #### Success Response
 
 ```shell
-{"solved-sudoku": "<sudoku array>"}
+{"solved-sudoku": [<sudoku array>]}
 ```
 
 ```shell
