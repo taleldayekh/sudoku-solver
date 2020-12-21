@@ -1,3 +1,5 @@
+![CI](https://github.com/taleldayekh/sudoku-solver/workflows/CI/badge.svg) [![codecov](https://codecov.io/gh/taleldayekh/sudoku-solver/branch/develop/graph/badge.svg?token=IMBF7FXCAD)](https://codecov.io/gh/taleldayekh/sudoku-solver)
+
 # Table of Contents
 
 - [API](#api)
