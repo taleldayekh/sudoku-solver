@@ -16,6 +16,8 @@ from server.app_sudoku.domain.sudoku_utils import (
     validate_sudoku_input,
 )
 from server.tests.utils.mock_data import (
+    INVALID_SUDOKU,
+    UNSOLVABLE_SUDOKU,
     VALID_SUDOKU,
     VALID_SUDOKU_HARD,
     VALID_SUDOKU_HARD_SOLVED,
@@ -91,9 +93,7 @@ def test_can_solve_simple_sudoku() -> None:
 
 
 def test_incorrect_sudoku_returns_empty_list() -> None:
-    sudoku = VALID_SUDOKU.copy()
-    sudoku[0] = 1
-    sudoku[1] = 1
+    sudoku = INVALID_SUDOKU
     solved_sudoku = solve_sudoku(sudoku)
     assert len(solved_sudoku) == 0
 
@@ -111,26 +111,23 @@ def test_sudoku_object_incorrect_input() -> None:
     sudoku = [1, 2, 3]
     S = Sudoku(sudoku)
     assert S.input == sudoku
-    assert not S.input_is_valid
-    assert not S.solved_sudoku
-    assert not S.sudoku_is_solvable
+    assert not S.is_valid
+    assert not S.solved
+    assert not S.is_solvable
 
 
 def test_sudoku_object_unsolvable_input() -> None:
-    sudoku = VALID_SUDOKU_HARD.copy()
-    sudoku[79] = 9
-    sudoku[80] = 9
-    S = Sudoku(sudoku)
-    assert S.input == sudoku
-    assert S.input_is_valid
-    assert not S.solved_sudoku
-    assert not S.sudoku_is_solvable
+    S = Sudoku(UNSOLVABLE_SUDOKU)
+    assert S.input == UNSOLVABLE_SUDOKU
+    assert S.is_valid
+    assert not S.solved
+    assert not S.is_solvable
 
 
 def test_sudoku_object_correct_input() -> None:
     sudoku = VALID_SUDOKU_HARD
     S = Sudoku(sudoku)
     assert S.input == sudoku
-    assert S.input_is_valid
-    assert S.solved_sudoku == VALID_SUDOKU_HARD_SOLVED
-    assert S.sudoku_is_solvable
+    assert S.is_valid
+    assert S.solved == VALID_SUDOKU_HARD_SOLVED
+    assert S.is_solvable
