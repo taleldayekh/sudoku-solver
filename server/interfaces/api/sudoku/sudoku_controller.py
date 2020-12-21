@@ -8,7 +8,7 @@ sudoku_v1 = Blueprint("sudoku_v1", __name__)
 
 
 @sudoku_v1.route("/solve", methods=["POST"])
-def solve() -> Response:
+def solve_endpoint() -> Response:
     content_type = "application/json"
     data = request.get_json()
 

@@ -26,20 +26,20 @@ http://localhost:5000/api/v1/sudoku/solve \
 
 #### Success Responses
 
-```json
+```shell
 {"data": [<sudoku array>]}
 ```
 
-```json
+```shell
 {"data": "Sudoku is unsolvable"}
 ```
 
 #### Error Responses
 
-```json
+```shell
 {"error": "Not a valid Sudoku"}
 ```
 
-```json
+```shell
 {"error": "Invalid JSON key"}
 ```
