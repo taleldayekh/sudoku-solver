@@ -11,9 +11,11 @@ from server.app_sudoku.domain.sudoku_utils import (
     get_column_number,
     get_row,
     get_row_number,
+    has_unique_solution,
     solve_sudoku,
     sudoku_to_list,
     validate_sudoku_input,
+    verify_solution,
 )
 from server.tests.utils.mock_data import (
     INVALID_SUDOKU,
@@ -21,6 +23,7 @@ from server.tests.utils.mock_data import (
     VALID_SUDOKU,
     VALID_SUDOKU_HARD,
     VALID_SUDOKU_HARD_SOLVED,
+    VALID_SUDOKU_NON_UNIQUE,
     VALID_SUDOKU_SOLVED,
 )
 
@@ -135,3 +138,13 @@ def test_sudoku_object_correct_input() -> None:
     assert S.is_solvable
     hint = S.hint
     assert VALID_SUDOKU_HARD_SOLVED[hint[0]] == hint[1]
+
+
+def test_verify_solution() -> None:
+    assert verify_solution(VALID_SUDOKU_SOLVED)
+    assert not verify_solution(VALID_SUDOKU)
+
+
+def test_has_unique_solution() -> None:
+    assert has_unique_solution(VALID_SUDOKU_HARD)
+    assert not has_unique_solution(VALID_SUDOKU_NON_UNIQUE)
