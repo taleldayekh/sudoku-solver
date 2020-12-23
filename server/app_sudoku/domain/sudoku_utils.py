@@ -4,6 +4,7 @@ from typing import Dict, List, Tuple
 NROWS = 9
 NCOLS = 9
 DIGITS = "123456789"
+DIGIT_SET = set([1, 2, 3, 4, 5, 6, 7, 8, 9])
 
 # 0-8 is row 0 , 9-17 row 1 etc.
 def get_row_number(index: int) -> int:
@@ -171,7 +172,16 @@ def solve_sudoku(board: List[int]) -> List[int]:
     output = search(output)
     if not output:
         return []
-    return sudoku_to_list(output)
+    output_list = sudoku_to_list(output)
+    return output_list if verify_solution(output_list) else []
+
+
+def verify_solution(board: List[int]) -> bool:
+    for square in SQUARES:
+        for unit in UNITS[square]:
+            if set(board[index] for index in unit) != DIGIT_SET:
+                return False
+    return True
 
 
 def get_hint(board: List[int], solved: List[int]) -> List[int]:
