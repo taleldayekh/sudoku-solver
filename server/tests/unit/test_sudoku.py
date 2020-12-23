@@ -114,6 +114,7 @@ def test_sudoku_object_incorrect_input() -> None:
     assert not S.is_valid
     assert not S.solved
     assert not S.is_solvable
+    assert not S.hint
 
 
 def test_sudoku_object_unsolvable_input() -> None:
@@ -122,6 +123,7 @@ def test_sudoku_object_unsolvable_input() -> None:
     assert S.is_valid
     assert not S.solved
     assert not S.is_solvable
+    assert not S.hint
 
 
 def test_sudoku_object_correct_input() -> None:
@@ -131,3 +133,5 @@ def test_sudoku_object_correct_input() -> None:
     assert S.is_valid
     assert S.solved == VALID_SUDOKU_HARD_SOLVED
     assert S.is_solvable
+    hint = S.hint
+    assert VALID_SUDOKU_HARD_SOLVED[hint[0]] == hint[1]
