@@ -1,6 +1,10 @@
 from typing import List
 
-from server.app_sudoku.domain.sudoku_utils import solve_sudoku, validate_sudoku_input
+from server.app_sudoku.domain.sudoku_utils import (
+    get_hint,
+    solve_sudoku,
+    validate_sudoku_input,
+)
 
 
 class Sudoku:
@@ -18,3 +22,7 @@ class Sudoku:
     @property
     def solved(self) -> List[int]:
         return solve_sudoku(self.input) if self.is_valid else []
+
+    @property
+    def hint(self) -> List[int]:
+        return get_hint(self.input, self.solved) if self.is_valid else []

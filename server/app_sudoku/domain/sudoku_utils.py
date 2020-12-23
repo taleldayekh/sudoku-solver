@@ -1,3 +1,4 @@
+import random
 from typing import Dict, List, Tuple
 
 NROWS = 9
@@ -171,3 +172,15 @@ def solve_sudoku(board: List[int]) -> List[int]:
     if not output:
         return []
     return sudoku_to_list(output)
+
+
+def get_hint(board: List[int], solved: List[int]) -> List[int]:
+    if not solved:
+        return []
+    new_squares = []
+    for index, square in enumerate(board):
+        if square == 0:
+            new_squares.append([index, solved[index]])
+    if not new_squares:
+        return []
+    return random.choice(new_squares)
