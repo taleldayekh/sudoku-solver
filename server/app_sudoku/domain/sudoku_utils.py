@@ -135,7 +135,7 @@ def eliminate(grid: Dict[int, str], index: int, digit: str) -> Dict[int, str]:
     return grid
 
 
-def search(grid: Dict[int, str]) -> Dict[int, str]:
+def search(grid: Dict[int, str], only_unique: bool = False) -> Dict[int, str]:
     """Depth-first search and constraint propagation,
     try all possible values."""
     if not grid:
@@ -148,17 +148,23 @@ def search(grid: Dict[int, str]) -> Dict[int, str]:
     _, square = min(
         (len(grid[square]), square) for square in SQUARES if len(grid[square]) > 1
     )
-    return first_non_empty(
+    grid, num_solutions = non_empty(
         [search(assign(grid.copy(), square, digit)) for digit in grid[square]]
     )
+    if only_unique and num_solutions > 1:
+        return dict()
+    return grid
 
 
-def first_non_empty(sequence: List[Dict[int, str]]) -> Dict[int, str]:
+def non_empty(sequence: List[Dict[int, str]]) -> Tuple[Dict[int, str], int]:
     # Return first non-empty element
+    true_element = dict()
+    num = 0
     for element in sequence:
         if element:
-            return element
-    return dict()
+            num += 1
+            true_element = element
+    return true_element, num
 
 
 def sudoku_to_list(grid: Dict[int, str]) -> List[int]:
@@ -174,6 +180,16 @@ def solve_sudoku(board: List[int]) -> List[int]:
         return []
     output_list = sudoku_to_list(output)
     return output_list if verify_solution(output_list) else []
+
+
+def has_unique_solution(board: List[int]) -> bool:
+    output = parse_board(board)
+    if not output:
+        return False
+    output = search(output, True)
+    if not output:
+        return False
+    return verify_solution(sudoku_to_list(output))
 
 
 def verify_solution(board: List[int]) -> bool:
