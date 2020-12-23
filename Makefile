@@ -14,5 +14,7 @@ type-check:
 	pipenv run mypy $(SRC_DIR)
 
 test:
-	pipenv run pytest --cov=server/
+	pipenv run pytest --cov=./
 
+test-coverage:
+	pipenv run pytest --cov=./ --cov-report=xml
