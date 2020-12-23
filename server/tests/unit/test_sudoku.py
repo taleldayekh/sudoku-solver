@@ -1,4 +1,4 @@
-from server.app_sudoku.domain.sudoku import Sudoku
+from server.app_sudoku.domain.sudoku import Sudoku, SudokuGenerator
 from server.app_sudoku.domain.sudoku_utils import (
     NCOLS,
     NROWS,
@@ -148,3 +148,11 @@ def test_verify_solution() -> None:
 def test_has_unique_solution() -> None:
     assert has_unique_solution(VALID_SUDOKU_HARD)
     assert not has_unique_solution(VALID_SUDOKU_NON_UNIQUE)
+
+
+def test_sudoku_generator_object_easy() -> None:
+    SG = SudokuGenerator()
+    sudoku = SG.generate_easy
+    assert validate_sudoku_input(sudoku)
+    assert verify_solution(solve_sudoku(sudoku))
+    assert has_unique_solution(sudoku)

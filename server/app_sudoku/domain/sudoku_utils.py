@@ -193,6 +193,8 @@ def has_unique_solution(board: List[int]) -> bool:
 
 
 def verify_solution(board: List[int]) -> bool:
+    if not board:
+        return False
     for square in SQUARES:
         for unit in UNITS[square]:
             if set(board[index] for index in unit) != DIGIT_SET:
@@ -210,3 +212,21 @@ def get_hint(board: List[int], solved: List[int]) -> List[int]:
     if not new_squares:
         return []
     return random.choice(new_squares)
+
+
+def generate_sudoku(number_of_non_empty: int) -> List[int]:
+    output = [0 for i in range(NROWS * NCOLS)]
+    counter = 0
+    while counter < number_of_non_empty:
+        index = random.randint(0, 80)
+        if output[index] == 0:
+            value = random.randint(1, 9)
+            output[index] = value
+            grid = parse_board(output)
+            if grid and min(len(grid[s]) for s in SQUARES) > 0:
+                counter += 1
+            else:
+                output[index] = 0
+    return (
+        output if has_unique_solution(output) else generate_sudoku(number_of_non_empty)
+    )
