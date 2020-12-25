@@ -1,6 +1,7 @@
 from typing import List
 
 from server.app_sudoku.domain.sudoku_utils import (
+    generate_sudoku,
     get_hint,
     solve_sudoku,
     validate_sudoku_input,
@@ -26,3 +27,17 @@ class Sudoku:
     @property
     def hint(self) -> List[int]:
         return get_hint(self.input, self.solved) if self.is_valid else []
+
+
+class SudokuGenerator:
+    def __init__(self) -> None:
+        self.number_of_starting_squares_easy = 32
+        self.number_of_starting_squares_hard = 30  # to be updated
+
+    @property
+    def generate_easy(self) -> List[int]:
+        return generate_sudoku(self.number_of_starting_squares_easy)
+
+    @property
+    def generate_hard(self) -> List[int]:
+        return generate_sudoku(self.number_of_starting_squares_hard)
