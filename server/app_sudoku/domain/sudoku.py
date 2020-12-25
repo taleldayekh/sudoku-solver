@@ -32,7 +32,7 @@ class Sudoku:
 class SudokuGenerator:
     def __init__(self) -> None:
         self.number_of_starting_squares_easy = 32
-        self.number_of_starting_squares_hard = 23
+        self.number_of_starting_squares_hard = 30  # to be updated
 
     @property
     def generate_easy(self) -> List[int]:
