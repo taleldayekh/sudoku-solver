@@ -9,6 +9,7 @@ from server.app_sudoku.domain.sudoku_utils import (
     get_box_number,
     get_column,
     get_column_number,
+    get_hint,
     get_row,
     get_row_number,
     has_unique_solution,
@@ -142,11 +143,20 @@ def test_sudoku_object_correct_input() -> None:
 
 def test_verify_solution() -> None:
     assert verify_solution(VALID_SUDOKU_SOLVED)
+
+
+def test_cannot_verify_solution() -> None:
+    assert not verify_solution(INVALID_SUDOKU)
     assert not verify_solution(VALID_SUDOKU)
 
 
 def test_has_unique_solution() -> None:
     assert has_unique_solution(VALID_SUDOKU_HARD)
+
+
+def test_has_not_unique_solution() -> None:
+    assert not has_unique_solution(INVALID_SUDOKU)
+    assert not has_unique_solution(UNSOLVABLE_SUDOKU)
     assert not has_unique_solution(VALID_SUDOKU_NON_UNIQUE)
 
 
@@ -156,3 +166,20 @@ def test_sudoku_generator_object_easy() -> None:
     assert validate_sudoku_input(sudoku)
     assert verify_solution(solve_sudoku(sudoku))
     assert has_unique_solution(sudoku)
+
+
+def test_sudoku_generator_object_hard() -> None:
+    SG = SudokuGenerator()
+    sudoku = SG.generate_hard
+    assert validate_sudoku_input(sudoku)
+    assert verify_solution(solve_sudoku(sudoku))
+    assert has_unique_solution(sudoku)
+
+
+def test_get_hint() -> None:
+    hint = get_hint(VALID_SUDOKU, VALID_SUDOKU_SOLVED)
+    assert VALID_SUDOKU_SOLVED[hint[0]] == hint[1]
+
+
+def test_cannot_get_hint() -> None:
+    assert not get_hint(VALID_SUDOKU_SOLVED, VALID_SUDOKU_SOLVED)
