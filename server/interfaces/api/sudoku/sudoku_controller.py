@@ -2,6 +2,7 @@ import json
 
 from flask import Blueprint, Response, request
 
+from server.app_sudoku.use_cases.get_generate import generate_sudoku
 from server.app_sudoku.use_cases.post_hint import get_hint
 from server.app_sudoku.use_cases.post_solve import InvalidSudoku, solve_sudoku
 
@@ -74,3 +75,15 @@ def hint_endpoint() -> Response:
             status=400,
             mimetype=content_type,
         )
+
+
+@sudoku_v1.route("/generate", methods=["GET"])
+def generate_endpoint() -> Response:
+    content_type = "application/json"
+    sudoku = generate_sudoku()
+
+    return Response(
+        response=json.dumps({"data": sudoku}),
+        status=200,
+        mimetype=content_type,
+    )
