@@ -86,6 +86,8 @@ def initialize_grid() -> Dict[int, str]:
 
 
 def parse_board(board: List[int]) -> Dict[int, str]:
+    if not validate_sudoku_input(board):
+        return dict()
     grid = initialize_grid()
     for index, digit in enumerate(board):
         if digit != 0:
@@ -148,12 +150,25 @@ def search(grid: Dict[int, str], only_unique: bool = False) -> Dict[int, str]:
     _, square = min(
         (len(grid[square]), square) for square in SQUARES if len(grid[square]) > 1
     )
-    grid, num_solutions = non_empty(
-        [search(assign(grid.copy(), square, digit)) for digit in grid[square]]
-    )
-    if only_unique and num_solutions > 1:
-        return dict()
+    if only_unique:
+        grid, num_solutions = non_empty(
+            [search(assign(grid.copy(), square, digit)) for digit in grid[square]]
+        )
+        if num_solutions > 1:
+            return dict()
+    else:
+        grid = first_non_empty(
+            [search(assign(grid.copy(), square, digit)) for digit in grid[square]]
+        )
     return grid
+
+
+def first_non_empty(sequence: List[Dict[int, str]]) -> Dict[int, str]:
+    # Return first non-empty element
+    for element in sequence:
+        if element:
+            return element
+    return dict()
 
 
 def non_empty(sequence: List[Dict[int, str]]) -> Tuple[Dict[int, str], int]:
@@ -194,6 +209,8 @@ def has_unique_solution(board: List[int]) -> bool:
 
 def verify_solution(board: List[int]) -> bool:
     if not board:
+        return False
+    if not validate_sudoku_input(board):
         return False
     for square in SQUARES:
         for unit in UNITS[square]:
