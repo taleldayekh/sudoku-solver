@@ -3,19 +3,25 @@
 # Table of Contents
 
 - [API](#api)
-  - [Sudoku Resource](#sudoku-resource)
+  - [Sudoku Resource Overview](#sudoku-resource-overview)
+  - [Sudoku Resource Details](#sudoku-resource-details)
 
 # API
 
-## Sudoku Resource
+## Sudoku Resource Overview
 
-| HTTP Method | Description  | Resource                           | Success Code | Failure Code |
-| ----------- | ------------ | ---------------------------------- | ------------ | ------------ |
-| POST        | Solve sudoku | [api/v1/sudoku/solve](#post-solve) | 200          | 400          |
+| HTTP Method | Description          | Resource               | Success Code | Failure Code |
+| ----------- | -------------------- | ---------------------- | ------------ | ------------ |
+| POST        | Solve sudoku         | api/v1/sudoku/solve    | 200          | 400          |
+| POST        | Sudoku solution hint | api/v1/sudoku/hint     | 200          | 400          |
+| GET         | Generate sudoku      | api/v1/sudoku/generate | 200          |              |
 
 ---
 
-### `POST` solve
+## Sudoku Resource Details
+
+<details>
+<summary>POST solve</summary>
 
 #### Request
 
@@ -23,7 +29,7 @@
 curl -X POST \
 http://localhost:5000/api/v1/sudoku/solve \
 -H "Content-Type: application/json" \
--d '{"sudoku": [<sudoku array>]}' 
+-d '{"sudoku": [<sudoku array>]}'
 ```
 
 #### Success Responses
@@ -39,9 +45,60 @@ http://localhost:5000/api/v1/sudoku/solve \
 #### Error Responses
 
 ```shell
-{"error": "Not a valid Sudoku"}
+{"data": "Not a valid sudoku"}
 ```
 
 ```shell
 {"error": "Invalid JSON key"}
 ```
+</details>
+
+<details>
+<summary>POST hint</summary>
+
+#### Request
+
+```shell
+curl -X POST \
+http://localhost:5000/api/v1/sudoku/hint \
+-H "Content-Type: application/json" \
+-d '{"sudoku": [<sudoku array>]}'
+```
+
+#### Success Responses
+
+```shell
+{"data": [<sudoku array>]}
+```
+
+```shell
+{"data": "Sudoku is unsolvable"}
+```
+
+#### Error Responses
+
+```shell
+{"data": "Not a valid sudoku"}
+```
+
+```shell
+{"error": "Invalid JSON key"}
+```
+</details>
+
+<details>
+<summary>GET generate</summary>
+
+#### Request
+
+```shell
+curl http://localhost:5000/api/v1/sudoku/generate
+```
+
+#### Success Responses
+
+```shell
+{"data": [<sudoku array>]}
+```
+
+</details>
