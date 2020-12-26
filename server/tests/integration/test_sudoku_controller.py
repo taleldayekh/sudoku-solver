@@ -15,6 +15,7 @@ from server.tests.utils.mock_data import (
 REQUEST_HEADERS = {"Content-Type": "application/json"}
 SOLVE_ENDPOINT = "api/v1/sudoku/solve"
 HINT_ENDPOINT = "api/v1/sudoku/hint"
+GENERATE_ENDPOINT = "api/v1/sudoku/generate"
 
 
 @pytest.mark.usefixtures("api_server")
@@ -106,3 +107,19 @@ class TestSudokuPOST:
 
         assert res_data["error"] == "Not a valid sudoku"
         assert res.status_code == 400
+
+
+@pytest.mark.usefixtures("api_server")
+class TestSudokuGET:
+    def test_generate_sudoku_returns_sudoku(self) -> None:
+        res = self.api.get(
+            GENERATE_ENDPOINT,
+            headers=REQUEST_HEADERS,
+        )
+        res_data = json.loads(res.get_data(as_text=True))
+
+        assert len(res_data["data"]) == 81
+        assert res.status_code == 200
+
+    def test_generate_sudoku_returns_exception(self) -> None:
+        pass
