@@ -1,8 +1,10 @@
+import random
 from typing import Dict, List, Tuple
 
 NROWS = 9
 NCOLS = 9
 DIGITS = "123456789"
+DIGIT_SET = set([1, 2, 3, 4, 5, 6, 7, 8, 9])
 
 # 0-8 is row 0 , 9-17 row 1 etc.
 def get_row_number(index: int) -> int:
@@ -84,6 +86,8 @@ def initialize_grid() -> Dict[int, str]:
 
 
 def parse_board(board: List[int]) -> Dict[int, str]:
+    if not validate_sudoku_input(board):
+        return dict()
     grid = initialize_grid()
     for index, digit in enumerate(board):
         if digit != 0:
@@ -133,7 +137,7 @@ def eliminate(grid: Dict[int, str], index: int, digit: str) -> Dict[int, str]:
     return grid
 
 
-def search(grid: Dict[int, str]) -> Dict[int, str]:
+def search(grid: Dict[int, str], only_unique: bool = False) -> Dict[int, str]:
     """Depth-first search and constraint propagation,
     try all possible values."""
     if not grid:
@@ -146,9 +150,17 @@ def search(grid: Dict[int, str]) -> Dict[int, str]:
     _, square = min(
         (len(grid[square]), square) for square in SQUARES if len(grid[square]) > 1
     )
-    return first_non_empty(
-        [search(assign(grid.copy(), square, digit)) for digit in grid[square]]
-    )
+    if only_unique:
+        grid, num_solutions = non_empty(
+            [search(assign(grid.copy(), square, digit)) for digit in grid[square]]
+        )
+        if num_solutions > 1:
+            return dict()
+    else:
+        grid = first_non_empty(
+            [search(assign(grid.copy(), square, digit)) for digit in grid[square]]
+        )
+    return grid
 
 
 def first_non_empty(sequence: List[Dict[int, str]]) -> Dict[int, str]:
@@ -157,6 +169,17 @@ def first_non_empty(sequence: List[Dict[int, str]]) -> Dict[int, str]:
         if element:
             return element
     return dict()
+
+
+def non_empty(sequence: List[Dict[int, str]]) -> Tuple[Dict[int, str], int]:
+    # Return first non-empty element
+    true_element = dict()
+    num = 0
+    for element in sequence:
+        if element:
+            num += 1
+            true_element = element
+    return true_element, num
 
 
 def sudoku_to_list(grid: Dict[int, str]) -> List[int]:
@@ -170,4 +193,57 @@ def solve_sudoku(board: List[int]) -> List[int]:
     output = search(output)
     if not output:
         return []
-    return sudoku_to_list(output)
+    output_list = sudoku_to_list(output)
+    return output_list if verify_solution(output_list) else []
+
+
+def has_unique_solution(board: List[int]) -> bool:
+    output = parse_board(board)
+    if not output:
+        return False
+    output = search(output, True)
+    if not output:
+        return False
+    return verify_solution(sudoku_to_list(output))
+
+
+def verify_solution(board: List[int]) -> bool:
+    if not board:
+        return False
+    if not validate_sudoku_input(board):
+        return False
+    for square in SQUARES:
+        for unit in UNITS[square]:
+            if set(board[index] for index in unit) != DIGIT_SET:
+                return False
+    return True
+
+
+def get_hint(board: List[int], solved: List[int]) -> List[int]:
+    if not solved:
+        return []
+    new_squares = []
+    for index, square in enumerate(board):
+        if square == 0:
+            new_squares.append([index, solved[index]])
+    if not new_squares:
+        return []
+    return random.choice(new_squares)
+
+
+def generate_sudoku(number_of_non_empty: int) -> List[int]:
+    output = [0 for i in range(NROWS * NCOLS)]
+    counter = 0
+    while counter < number_of_non_empty:
+        index = random.randint(0, 80)
+        if output[index] == 0:
+            value = random.randint(1, 9)
+            output[index] = value
+            grid = parse_board(output)
+            if grid and min(len(grid[s]) for s in SQUARES) > 0:
+                counter += 1
+            else:
+                output[index] = 0
+    return (
+        output if has_unique_solution(output) else generate_sudoku(number_of_non_empty)
+    )

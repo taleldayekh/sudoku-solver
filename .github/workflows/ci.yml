@@ -28,6 +28,9 @@ jobs:
         run: |
           make lint
           make type-check
-      - name: Test
-        run: make test
 
+      - name: Test
+        run: make test-coverage
+
+      - name: Upload Test Coverage
+        uses: codecov/codecov-action@v1
