@@ -79,11 +79,11 @@ class SudokuComponents:
         return list(range(0, self._SUDOKU_ROWS, self._SUDOKU_COLS))
 
     @property
-    def units(self):
+    def units(self) -> Dict[int, List[List[int]]]:
         return self.__generate_units_and_peers()[0]
 
     @property
-    def peers(self):
+    def peers(self) -> Dict[int, List[int]]:
         return self.__generate_units_and_peers()[1]
 
 
