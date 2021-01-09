@@ -3,7 +3,7 @@ from typing import Dict, List, Tuple
 from server.app_sudoku.domain.sudoku_components import (
     PEERS,
     SQUARES,
-    SUDOKU_BOARD,
+    NUM_OF_SQUARES,
     SUDOKU_ROWS,
     UNITS,
 )
@@ -14,7 +14,7 @@ class SudokuBase:
 
     @staticmethod
     def validate_sudoku_input(board: List[int]) -> bool:
-        if len(board) != SUDOKU_BOARD:
+        if len(board) != NUM_OF_SQUARES:
             return False
 
         for num in board:
@@ -98,7 +98,7 @@ class SudokuBase:
             return dict()
 
         grid = dict()
-        for index in range(SUDOKU_BOARD):
+        for index in range(NUM_OF_SQUARES):
             grid[index] = self._DIGITS
 
         for index, digit in enumerate(board):
@@ -107,7 +107,7 @@ class SudokuBase:
 
         return grid
 
-    # TODO: Consider whetger it makes sense making this method a part of the search method
+    # TODO: Consider whether it makes sense making this method a part of the search method
     @staticmethod
     def _first_non_empty(sequence: List[Dict[int, str]]) -> Dict[int, str]:
         """
@@ -119,7 +119,7 @@ class SudokuBase:
 
         return dict()
 
-    # TODO: Consider whetger it makes sense making this method a part of the search method
+    # TODO: Consider whether it makes sense making this method a part of the search method
     @staticmethod
     def _non_empty(sequence: List[Dict[int, str]]) -> Tuple[Dict[int, str], int]:
         # TODO: Should this have the same docstring as the first_non_empty method?

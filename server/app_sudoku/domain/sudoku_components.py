@@ -2,8 +2,8 @@ from typing import Dict, List, Tuple
 
 SUDOKU_ROWS = 9
 SUDOKU_COLS = 9
-SUDOKU_BOARD = SUDOKU_ROWS * SUDOKU_COLS
-SQUARES = list(range(SUDOKU_BOARD))
+NUM_OF_SQUARES = SUDOKU_ROWS * SUDOKU_COLS
+SQUARES = list(range(NUM_OF_SQUARES))
 
 
 def get_row_number(index: int) -> int:
@@ -53,7 +53,7 @@ def get_box(board: List[int], box: int) -> List[int]:
     """
     box_list = []
 
-    for index in range(SUDOKU_BOARD):
+    for index in range(NUM_OF_SQUARES):
         if get_box_number(index) == box:
             box_list.append(board[index])
 
@@ -66,7 +66,7 @@ def generate_units_and_peers() -> Tuple[
     units = dict()
     peers = dict()
 
-    for index in range(SUDOKU_BOARD):
+    for index in range(NUM_OF_SQUARES):
         units_list = [
             get_row(SQUARES, get_row_number(index)),
             get_col(SQUARES, get_col_number(index)),

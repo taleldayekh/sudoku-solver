@@ -1,7 +1,7 @@
 import random
 from typing import List
 
-from server.app_sudoku.domain.sudoku_components import SQUARES, SUDOKU_BOARD
+from server.app_sudoku.domain.sudoku_components import SQUARES, NUM_OF_SQUARES
 from server.app_sudoku.domain.sudoku_solver_model import SudokuBase
 
 
@@ -23,7 +23,7 @@ class SudokuGenerator(SudokuBase):
         return self.verify_solution(self.sudoku_to_list(uniquely_solved_sudoku))
 
     def _generate_sudoku(self, startin_squares: int) -> List[int]:
-        sudoku = [0 for i in range(SUDOKU_BOARD)]
+        sudoku = [0 for i in range(NUM_OF_SQUARES)]
         counter = 0
 
         while counter < startin_squares:
