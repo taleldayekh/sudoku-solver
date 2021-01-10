@@ -13,8 +13,11 @@ lint:
 type-check:
 	pipenv run mypy $(SRC_DIR)
 
-test:
-	pipenv run pytest --cov=./
+test-unit:
+	pipenv run pytest ./server/tests/unit
+
+test-e2e:
+	pipenv run pytest ./server/tests/e2e
 
 test-coverage:
-	pipenv run pytest --cov=./ --cov-report=xml
+	pipenv run pytest --cov=./server/tests/ --cov-report=xml
