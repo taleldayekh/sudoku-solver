@@ -1,6 +1,4 @@
 import pytest
-
-# TODO: Figure out if there is a better/correct way to access and type "FixtureRequest"
 from _pytest.fixtures import FixtureRequest
 
 from server import create_app

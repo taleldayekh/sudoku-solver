@@ -1,8 +1,8 @@
 from typing import List
 
-from server.app_sudoku.domain.sudoku import SudokuGenerator
+from server.app_sudoku.domain.sudoku_generator_model import SudokuGenerator
 
 
 def generate_sudoku() -> List[int]:
     generator = SudokuGenerator()
-    return generator.generate_easy
+    return generator.easy
