@@ -5,6 +5,7 @@ from flask import Blueprint, Response, request
 from server.app_sudoku.use_cases.get_generate import generate_sudoku
 from server.app_sudoku.use_cases.post_hint import get_hint
 from server.app_sudoku.use_cases.post_solve import InvalidSudoku, solve_sudoku
+from server.app_sudoku.use_cases.post_verify import verify_sudoku
 
 sudoku_v1 = Blueprint("sudoku_v1", __name__)
 
@@ -60,6 +61,34 @@ def hint_endpoint() -> Response:
             )
         return Response(
             response=json.dumps({"data": "Sudoku is unsolvable"}),
+            status=200,
+            mimetype=content_type,
+        )
+    except KeyError:
+        return Response(
+            response=json.dumps({"error": "Invalid JSON key"}),
+            status=400,
+            mimetype=content_type,
+        )
+    except InvalidSudoku as err:
+        return Response(
+            response=json.dumps({"error": str(err)}),
+            status=400,
+            mimetype=content_type,
+        )
+
+
+@sudoku_v1.route("/verify", methods=["POST"])
+def verify_endpoint() -> Response:
+    content_type = "application/json"
+    data = request.get_json()
+
+    try:
+        sudoku_board = data["sudoku"]
+        verify = verify_sudoku(sudoku_board)
+
+        return Response(
+            response=json.dumps({"data": verify}),
             status=200,
             mimetype=content_type,
         )

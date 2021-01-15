@@ -55,3 +55,7 @@ class SudokuSolver(SudokuBase):
     @property
     def hint(self) -> List[int]:
         return self._get_hint
+
+    @property
+    def verify(self) -> bool:
+        return self.verify_solution(self.sudoku)

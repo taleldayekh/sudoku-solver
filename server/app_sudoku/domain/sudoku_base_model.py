@@ -1,9 +1,9 @@
 from typing import Dict, List, Tuple
 
 from server.app_sudoku.domain.sudoku_components import (
+    NUM_OF_SQUARES,
     PEERS,
     SQUARES,
-    NUM_OF_SQUARES,
     SUDOKU_ROWS,
     UNITS,
 )
