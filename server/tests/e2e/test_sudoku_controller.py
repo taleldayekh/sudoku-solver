@@ -15,6 +15,7 @@ from server.tests.utils.mock_data import (
 REQUEST_HEADERS = {"Content-Type": "application/json"}
 SOLVE_ENDPOINT = "api/v1/sudoku/solve"
 HINT_ENDPOINT = "api/v1/sudoku/hint"
+VERIFY_ENDPOINT = "api/v1/sudoku/verify"
 GENERATE_ENDPOINT = "api/v1/sudoku/generate"
 
 
@@ -100,6 +101,48 @@ class TestSudokuPOST:
     def test_hint_invalid_sudoku_returns_400(self) -> None:
         res = self.api.post(
             HINT_ENDPOINT,
+            data=json.dumps({"sudoku": INVALID_SUDOKU}),
+            headers=REQUEST_HEADERS,
+        )
+        res_data = json.loads(res.get_data(as_text=True))
+
+        assert res_data["error"] == "Not a valid sudoku"
+        assert res.status_code == 400
+
+    def test_verify_solved_sudoku_returns_true(self) -> None:
+        res = self.api.post(
+            VERIFY_ENDPOINT,
+            data=json.dumps({"sudoku": VALID_SUDOKU_SOLVED}),
+            headers=REQUEST_HEADERS,
+        )
+        res_data = json.loads(res.get_data(as_text=True))
+
+        assert res_data["data"]
+
+    def test_verify_unsolved_sudoku_returns_false(self) -> None:
+        res = self.api.post(
+            VERIFY_ENDPOINT,
+            data=json.dumps({"sudoku": VALID_SUDOKU}),
+            headers=REQUEST_HEADERS,
+        )
+        res_data = json.loads(res.get_data(as_text=True))
+
+        assert not res_data["data"]
+
+    def test_verify_invalid_json_key_returns_400(self) -> None:
+        res = self.api.post(
+            VERIFY_ENDPOINT,
+            data=json.dumps({"not-a-valid-key": VALID_SUDOKU}),
+            headers=REQUEST_HEADERS,
+        )
+        res_data = json.loads(res.get_data(as_text=True))
+
+        assert res_data["error"] == "Invalid JSON key"
+        assert res.status_code == 400
+
+    def test_verify_invalid_sudoku_returns_400(self) -> None:
+        res = self.api.post(
+            VERIFY_ENDPOINT,
             data=json.dumps({"sudoku": INVALID_SUDOKU}),
             headers=REQUEST_HEADERS,
         )

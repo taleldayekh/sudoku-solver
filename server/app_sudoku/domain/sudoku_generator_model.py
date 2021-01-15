@@ -1,7 +1,7 @@
 import random
 from typing import List
 
-from server.app_sudoku.domain.sudoku_components import SQUARES, NUM_OF_SQUARES
+from server.app_sudoku.domain.sudoku_components import NUM_OF_SQUARES, SQUARES
 from server.app_sudoku.domain.sudoku_solver_model import SudokuBase
 
 

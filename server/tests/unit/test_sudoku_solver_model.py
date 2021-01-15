@@ -61,3 +61,13 @@ def test_cannot_provide_sudoku_hint() -> None:
     sudoku = SudokuSolver(VALID_SUDOKU_SOLVED)
     hint = sudoku.hint
     assert not hint
+
+
+def test_can_verify_correct_solution() -> None:
+    sudoku = SudokuSolver(VALID_SUDOKU_SOLVED)
+    assert sudoku.verify
+
+
+def test_cannot_verify_incorrect_solution() -> None:
+    sudoku = SudokuSolver(VALID_SUDOKU)
+    assert not sudoku.verify

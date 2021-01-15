@@ -10,11 +10,12 @@
 
 ## Sudoku Resource Overview
 
-| HTTP Method | Description          | Resource               | Success Code | Failure Code |
-| ----------- | -------------------- | ---------------------- | ------------ | ------------ |
-| POST        | Solve sudoku         | api/v1/sudoku/solve    | 200          | 400          |
-| POST        | Sudoku solution hint | api/v1/sudoku/hint     | 200          | 400          |
-| GET         | Generate sudoku      | api/v1/sudoku/generate | 200          |              |
+| HTTP Method | Description            | Resource               | Success Code | Failure Code |
+| ----------- | ---------------------- | ---------------------- | ------------ | ------------ |
+| POST        | Solve sudoku           | api/v1/sudoku/solve    | 200          | 400          |
+| POST        | Sudoku solution hint   | api/v1/sudoku/hint     | 200          | 400          |
+| POST        | Sudoku verify solution | api/v1/sudoku/verify   | 200          | 400          |
+| GET         | Generate sudoku        | api/v1/sudoku/generate | 200          |              |
 
 ---
 
@@ -85,6 +86,36 @@ http://localhost:5000/api/v1/sudoku/hint \
 {"error": "Invalid JSON key"}
 ```
 </details>
+
+<details>
+<summary>POST verify</summary>
+
+#### Request
+
+```shell
+curl -X POST \
+http://localhost:5000/api/v1/sudoku/verify \
+-H "Content-Type: application/json" \
+-d '{"sudoku": [<sudoku array>]}'
+```
+
+#### Success Responses
+
+```shell
+{"data": bool}
+```
+
+#### Error Responses
+
+```shell
+{"data": "Not a valid sudoku"}
+```
+
+```shell
+{"error": "Invalid JSON key"}
+```
+</details>
+
 
 <details>
 <summary>GET generate</summary>
