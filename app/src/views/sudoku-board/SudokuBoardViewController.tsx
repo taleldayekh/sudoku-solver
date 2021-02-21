@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SudokuBoard } from '../../view-models/view-models.interface';
 import { DefaultCandidatesIndexes } from './sudoku-board.interface';
 import SudokuBoardView from './SudokuBoardView';
+import Sudoku from '../../data/sudoku.repository';
+import { View, Text, Button } from 'react-native'
 
 const SudokuBoardViewController = () => {
   const [sudokuBoard, setSudokuBoard] = useState<SudokuBoard>([]);
+  const [isValidSolution, setIsValidSolution] = useState<boolean | undefined>(undefined)
   const [
     defaultCandidatesIndexes,
     setDefaultCandidatesIndexes,
@@ -61,18 +64,44 @@ const SudokuBoardViewController = () => {
 
     setSudokuBoard(dummySudoku);
     setDefaultCandidatesIndexes(getDefaultCandidatesIndexes());
-  });
+  }, [sudokuBoard]);
+
+  useEffect(() => {
+    if (sudokuBoard.length === 0 || sudokuBoard.flat().includes(0)) return;
+    Sudoku.verifySolution(sudokuBoard.flat())
+      .then((res) => {
+        console.log(res)
+        setIsValidSolution(res)})
+      .catch((err) => console.log(err));
+  }, [sudokuBoard]);
 
   return (
     <>
-      {sudokuBoard && Object.keys(defaultCandidatesIndexes).length !== 0 ? (
+      {sudokuBoard && Object.keys(defaultCandidatesIndexes).length !== 0 && isValidSolution === undefined ? (
         <SudokuBoardView
           sudokuBoard={sudokuBoard}
           defaultCandidatesIndexes={defaultCandidatesIndexes}
           editCandidate={editCandidate}
         />
       ) : (
-        <></>
+        <>
+        {isValidSolution === true ? (
+          <View style={{paddingTop: 400, alignItems: 'center'}}>
+            <Text style={{fontSize: 60}}>👍</Text>
+            <Button title="Back" onPress={() => {
+              setSudokuBoard(dummySudoku)
+              setIsValidSolution(undefined)
+            }}/>
+          </View>
+        ) : (
+          <View style={{paddingTop: 400, alignItems: 'center'}}>
+            <Text style={{fontSize: 60}}>👎</Text>
+            <Button title="Back" onPress={() => {
+              setIsValidSolution(undefined)
+            }}/>
+          </View>
+        )}
+        </>
       )}
     </>
   );
@@ -91,4 +120,17 @@ const dummySudoku = [
   [0, 0, 0, 0, 0, 0, 0, 3, 0],
   [6, 0, 2, 5, 8, 0, 0, 0, 0],
   [0, 0, 3, 0, 6, 0, 7, 8, 0],
+];
+
+// ! Solution
+const solved = [
+  [2, 1, 4, 3], // 1
+  [3, 6,  1], // 2
+  [5, 6, 9, 1, 8, 4], // 3
+  [2, 8, 6, 3, 9], // 4
+  [1, 7, 4, 3, 2], // 5
+  [3, 4, 5, 1, 8, 6, 9, 7], // 6
+  [8, 9, 4, 7, 2, 1, 5, 6], // 7
+  [7, 3, 1, 4, 9], // 8
+  [1, 5, 9, 4, 2], // 9
 ];
