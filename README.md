@@ -5,6 +5,8 @@
 - [API](#api)
   - [Sudoku Resource Overview](#sudoku-resource-overview)
   - [Sudoku Resource Details](#sudoku-resource-details)
+- [Architecture](#architecture)
+  - [App](#app)
 
 # API
 
@@ -133,3 +135,27 @@ curl http://localhost:5000/api/v1/sudoku/generate
 ```
 
 </details>
+
+# Architecture
+
+## App
+
+### View
+
+1. **View**  
+
+   _*Views*_ are the touching points for users, they receive user input and displays output. A _*View*_ is considered "dumb" (presentational) and does not contain any application logic.
+
+   When a user interacts with a _*View*_ events are triggered and passed on to a _*ViewController*_. A _*View*_ will then change its visual state based on the response from the _*ViewController*_.
+
+   _*Views*_ should only be used for displaying data and may contain related subviews.
+
+2. **ViewController**  
+
+   A _*ViewController*_ controls a _*View*_ and its subviews, i.e. `SudokuBoardView` with the subview `SudokuCellView`. The _*ViewController*_ is smart and contains all _*View*_ related logic. _*ViewControllers*_ work as the "glue" between the application and what users see on the screen.
+
+   The _*ViewControllers*_ resides between the _*Views*_ and the _*ViewModels*_.
+
+   A _*View*_ is never aware of any _*ViewModels*_. Events like user inputs are not passed directly from the _*View*_ to a _*ViewModel*_, they get passed to a _*ViewController*_ which in turn prepares the data and passes it on to the _*ViewModel*_.
+
+   A _*ViewController*_ can reference many different _*ViweModels*_.
