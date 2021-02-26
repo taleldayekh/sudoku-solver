@@ -6,8 +6,34 @@ on:
       - develop
 
 jobs:
-  ci:
-    name: Quality Assurance
+  app-ci:
+    name: App Quality Assurance
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: Install Dependencies
+        run: |
+          cd app
+          yarn install
+
+      - name: Test
+        run: |
+          cd app
+          yarn test
+
+      - name: Upload Test Coverage
+        uses: codecov/codecov-action@v1
+
+  api-ci:
+    name: API Quality Assurance
     runs-on: ubuntu-latest
 
     steps:
@@ -23,7 +49,7 @@ jobs:
         run: |
           pip install pipenv
           pipenv install --dev
-      
+
       - name: Static Code Analysis
         run: |
           make lint
