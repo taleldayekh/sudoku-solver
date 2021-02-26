@@ -55,8 +55,11 @@ jobs:
           make lint
           make type-check
 
-      - name: Test
-        run: make test-coverage
+      - name: Unit Test
+        run: make test-unit
+
+      - name: E2E Tests
+        run: make test-e2e
 
       - name: Upload Test Coverage
         uses: codecov/codecov-action@v1
