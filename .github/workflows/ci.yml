@@ -24,6 +24,11 @@ jobs:
           cd app
           yarn install
 
+      - name: Lint
+        run: |
+          cd app
+          yarn lint
+
       - name: Test
         run: |
           cd app

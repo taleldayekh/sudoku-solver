@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { SudokuBoard } from '../../view-models/view-models.interface';
-import { DefaultCandidatesIndexes } from './sudoku-board.interface';
-import SudokuBoardView from './SudokuBoardView';
+import { Button, Text, View } from 'react-native';
 import Sudoku from '../../data/sudoku.repository';
-import { View, Text, Button } from 'react-native'
+import { SudokuBoard } from '../../view-models/view-models.interface';
+import SudokuBoardView from './SudokuBoardView';
+import { DefaultCandidatesIndexes } from './sudoku-board.interface';
 
 const SudokuBoardViewController = () => {
   const [sudokuBoard, setSudokuBoard] = useState<SudokuBoard>([]);
-  const [isValidSolution, setIsValidSolution] = useState<boolean | undefined>(undefined)
+  const [isValidSolution, setIsValidSolution] = useState<boolean | undefined>(
+    undefined,
+  );
   const [
     defaultCandidatesIndexes,
-    setDefaultCandidatesIndexes,
+    // setDefaultCandidatesIndexes,
   ] = useState<DefaultCandidatesIndexes>({});
 
   const getDefaultCandidatesIndexes = (): DefaultCandidatesIndexes => {
@@ -25,7 +27,9 @@ const SudokuBoardViewController = () => {
             sudokuCell !== 0 ? [index] : [],
         );
 
-        if (!candidatesIndexes.length) return defaultCandidatesIndexes;
+        if (!candidatesIndexes.length) {
+          return defaultCandidatesIndexes;
+        }
 
         defaultCandidatesIndexes[index] = candidatesIndexes;
         return defaultCandidatesIndexes;
@@ -33,6 +37,8 @@ const SudokuBoardViewController = () => {
       {},
     );
   };
+
+  console.log(getDefaultCandidatesIndexes);
 
   const editCandidate = (
     rowIndex: number,
@@ -54,30 +60,36 @@ const SudokuBoardViewController = () => {
     setSudokuBoard(updatedSudokuBoard);
   };
 
+  // useEffect(() => {
+  //   // TODO: Extend empty object check and remove duplication
+  //   if (
+  //     sudokuBoard.length &&
+  //     Object.keys(defaultCandidatesIndexes).length !== 0
+  //   ) {
+  //     return;
+  //   }
+
+  //   setSudokuBoard(dummySudoku);
+  //   setDefaultCandidatesIndexes(getDefaultCandidatesIndexes());
+  // }, [sudokuBoard, defaultCandidatesIndexes, getDefaultCandidatesIndexes]);
+
   useEffect(() => {
-    // TODO: Extend empty object check and remove duplication
-    if (
-      sudokuBoard.length &&
-      Object.keys(defaultCandidatesIndexes).length !== 0
-    )
+    if (sudokuBoard.length === 0 || sudokuBoard.flat().includes(0)) {
       return;
-
-    setSudokuBoard(dummySudoku);
-    setDefaultCandidatesIndexes(getDefaultCandidatesIndexes());
-  }, [sudokuBoard]);
-
-  useEffect(() => {
-    if (sudokuBoard.length === 0 || sudokuBoard.flat().includes(0)) return;
+    }
     Sudoku.verifySolution(sudokuBoard.flat())
       .then((res) => {
-        console.log(res)
-        setIsValidSolution(res)})
+        console.log(res);
+        setIsValidSolution(res);
+      })
       .catch((err) => console.log(err));
   }, [sudokuBoard]);
 
   return (
     <>
-      {sudokuBoard && Object.keys(defaultCandidatesIndexes).length !== 0 && isValidSolution === undefined ? (
+      {sudokuBoard &&
+      Object.keys(defaultCandidatesIndexes).length !== 0 &&
+      isValidSolution === undefined ? (
         <SudokuBoardView
           sudokuBoard={sudokuBoard}
           defaultCandidatesIndexes={defaultCandidatesIndexes}
@@ -85,22 +97,46 @@ const SudokuBoardViewController = () => {
         />
       ) : (
         <>
-        {isValidSolution === true ? (
-          <View style={{paddingTop: 400, alignItems: 'center'}}>
-            <Text style={{fontSize: 60}}>👍</Text>
-            <Button title="Back" onPress={() => {
-              setSudokuBoard(dummySudoku)
-              setIsValidSolution(undefined)
-            }}/>
-          </View>
-        ) : (
-          <View style={{paddingTop: 400, alignItems: 'center'}}>
-            <Text style={{fontSize: 60}}>👎</Text>
-            <Button title="Back" onPress={() => {
-              setIsValidSolution(undefined)
-            }}/>
-          </View>
-        )}
+          {isValidSolution === true ? (
+            <View
+              style={{
+                paddingTop: 400,
+                alignItems: 'center',
+              }}>
+              <Text
+                style={{
+                  fontSize: 60,
+                }}>
+                👍
+              </Text>
+              <Button
+                title="Back"
+                onPress={() => {
+                  setSudokuBoard(dummySudoku);
+                  setIsValidSolution(undefined);
+                }}
+              />
+            </View>
+          ) : (
+            <View
+              style={{
+                paddingTop: 400,
+                alignItems: 'center',
+              }}>
+              <Text
+                style={{
+                  fontSize: 60,
+                }}>
+                👎
+              </Text>
+              <Button
+                title="Back"
+                onPress={() => {
+                  setIsValidSolution(undefined);
+                }}
+              />
+            </View>
+          )}
         </>
       )}
     </>
@@ -123,14 +159,14 @@ const dummySudoku = [
 ];
 
 // ! Solution
-const solved = [
-  [2, 1, 4, 3], // 1
-  [3, 6,  1], // 2
-  [5, 6, 9, 1, 8, 4], // 3
-  [2, 8, 6, 3, 9], // 4
-  [1, 7, 4, 3, 2], // 5
-  [3, 4, 5, 1, 8, 6, 9, 7], // 6
-  [8, 9, 4, 7, 2, 1, 5, 6], // 7
-  [7, 3, 1, 4, 9], // 8
-  [1, 5, 9, 4, 2], // 9
-];
+// const solved = [
+//   [2, 1, 4, 3], // 1
+//   [3, 6, 1], // 2
+//   [5, 6, 9, 1, 8, 4], // 3
+//   [2, 8, 6, 3, 9], // 4
+//   [1, 7, 4, 3, 2], // 5
+//   [3, 4, 5, 1, 8, 6, 9, 7], // 6
+//   [8, 9, 4, 7, 2, 1, 5, 6], // 7
+//   [7, 3, 1, 4, 9], // 8
+//   [1, 5, 9, 4, 2], // 9
+// ];
