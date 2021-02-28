@@ -14,10 +14,7 @@ type-check:
 	pipenv run mypy $(SRC_DIR)
 
 test-unit:
-	pipenv run pytest ./server/tests/unit
+	pipenv run python3 -m pytest --cov-report=xml --cov-report term --cov=. ./$(SRC_DIR)/tests/unit -v -s
 
 test-e2e:
-	pipenv run pytest ./server/tests/e2e
-
-test-coverage:
-	pipenv run pytest --cov=./server/tests/ --cov-report=xml
+	pipenv run python3 -m pytest --cov-report=xml --cov-report term --cov=. ./$(SRC_DIR)/tests/e2e -v -s

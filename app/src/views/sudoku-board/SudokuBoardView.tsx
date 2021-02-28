@@ -1,8 +1,8 @@
 import React from 'react';
 import { View } from 'react-native';
+import SudokuCellView from '../sudoku-cell/SudokuCellView';
 import { SUDOKU_ROW_COL_COUNT } from './constants';
 import { SudokuBoardViewProps } from './sudoku-board.interface';
-import SudokuCellView from '../sudoku-cell/SudokuCellView';
 import styles from './sudoku-board.styles';
 
 const BOX_BORDER_INDEX = [2, 5];

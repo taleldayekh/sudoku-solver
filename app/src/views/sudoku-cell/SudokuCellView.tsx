@@ -22,7 +22,8 @@ const SudokuCellView: React.FC<SudokuCellProps> = (props) => {
           // TODO: Add validation
           onChangeText={(candidate) =>
             editCandidate(rowIndex, cellIndex, Number(candidate))
-          }></TextInput>
+          }
+        />
       )}
     </>
   );

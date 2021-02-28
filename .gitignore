@@ -1,5 +1,6 @@
 # testing
 .coverage
+coverage
 coverage.xml
 
 # python

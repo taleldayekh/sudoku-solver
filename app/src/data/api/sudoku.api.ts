@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { API_BASE_URL } from './constants';
-import { SudokuModel } from '../../models/models.interface';
+// import { SudokuModel } from '../../models/models.interface';
 import { SudokuVerifyResponse } from './sudoku.api.interface';
 
 const SUDOKU_URL = 'sudoku';
