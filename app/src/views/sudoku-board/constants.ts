@@ -1,3 +1,0 @@
-const SUDOKU_ROW_COL_COUNT = 9;
-
-export { SUDOKU_ROW_COL_COUNT };

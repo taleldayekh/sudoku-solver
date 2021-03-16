@@ -1,7 +1,9 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-  cellContent: {
-    fontSize: 25,
+  wrapper: {
+    flex: 1,
+    flexDirection: 'column-reverse',
+    paddingBottom: 100,
   },
 });
