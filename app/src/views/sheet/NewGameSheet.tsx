@@ -5,9 +5,9 @@ import styles from '@/views/sheet/sheet.styles';
 const NewGameSheet: React.FC = () => {
   return (
     <View style={styles.newGame}>
-      <Button title="Easy" onPress={() => {}} />
-      <Button title="Medium" onPress={() => {}} />
-      <Button title="Hard" onPress={() => {}} />
+      <Button testID="easy-game-button" title="Easy" onPress={() => {}} />
+      <Button testID="medium-game-button" title="Medium" onPress={() => {}} />
+      <Button testID="hard-game-button" title="Hard" onPress={() => {}} />
     </View>
   );
 };

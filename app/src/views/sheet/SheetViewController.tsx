@@ -52,7 +52,9 @@ const SheetViewController: React.FC<SheetViewControllerProps> = (
   return (
     <>
       <PanGestureHandler onGestureEvent={onHideSheetGesture}>
-        <Animated.View style={[styles.sheet, animatedStyles]}>
+        <Animated.View
+          style={[styles.sheet, animatedStyles]}
+          testID="new-game-sheet">
           {children}
         </Animated.View>
       </PanGestureHandler>

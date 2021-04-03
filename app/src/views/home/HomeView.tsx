@@ -8,7 +8,11 @@ const HomeView: React.FC<HomeViewProps> = (props: HomeViewProps) => {
 
   return (
     <View style={styles.wrapper}>
-      <Button title="New Game" onPress={() => newGameAction()} />
+      <Button
+        testID="new-game-button"
+        title="New Game"
+        onPress={() => newGameAction()}
+      />
     </View>
   );
 };

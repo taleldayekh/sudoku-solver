@@ -10,7 +10,6 @@ const HomeViewController: React.FC = () => {
 
   const displayNewGameSheet = (): void => {
     setNewGameSheetIsVisible(!newGameSheetIsVisible);
-    //
   };
 
   return (
