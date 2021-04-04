@@ -1,9 +1,8 @@
 import React from 'react';
-// import SudokuBoardViewController from './views/sudoku-board/SudokuBoardViewController';
+import HomeViewController from '@/views/home/HomeViewController';
 
 const App: React.FC = () => {
-  return <></>;
-  // return <SudokuBoardViewController />;
+  return <HomeViewController />;
 };
 
 export default App;
