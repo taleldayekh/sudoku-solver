@@ -8,3 +8,7 @@ __pycache__/
 
 # ide
 .vscode
+
+# .js
+sudoku/src/*.js
+sudoku/src/*/*.js
